@@ -20,4 +20,6 @@ dependencies = [
     "tqdm>=4.67.3",
     "directory-tree>=1.0.0",
     "fastai<2.8",
+    "opencv-python>=4.11.0.86",
+    "seaborn>=0.13.2",
 ]
