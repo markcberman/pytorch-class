@@ -928,11 +928,15 @@ def get_efficientnet_embedding_backbone(embedding_dim=128, pretrained=True,
         # Raise an error if the weights file is missing to prevent silent failures.
         if not os.path.exists(weights_path):
             raise FileNotFoundError(f"Weights file not found at the specified path: {weights_path}")
-        
+
         # Load the state dictionary from the path, mapping to CPU to avoid device errors.
         state_dict = torch.load(weights_path, map_location='cpu')
         # Load the state dictionary into the model.
         model.load_state_dict(state_dict)
+    else:
+        # Download the default ImageNet-pretrained weights from torchvision and load them.
+        weights = tv_models.EfficientNet_B0_Weights.DEFAULT
+        model = tv_models.efficientnet_b0(weights=weights)
     
     # Modify the final classification layer to produce an embedding.
     # Get the number of input features from the original classifier layer.
