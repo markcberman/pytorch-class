@@ -31,3 +31,8 @@ conda-meta/
 # Vector stores / local data
 .chroma*/
 examples/module_5/graded/dataset/dataset-images.tar.gz
+
+# Saved model weights
+*.pth
+*.pt
+**/saved_models/
