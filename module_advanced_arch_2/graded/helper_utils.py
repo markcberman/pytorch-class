@@ -80,8 +80,51 @@ def plot_samples_from_dataset(dataset_path):
     # Render the final figure
     plt.show()
 
-
 def load_model(model_path, device="cpu"):
+    """
+    Initializes a ResNet50 model structure, adapts the final layer for binary 
+    classification, and lazily downloads the model weights if missing.
+    """
+
+    import urllib.request
+
+    MODEL_URL = "https://github.com/markcberman/pytorch-class/releases/download/v1.0.1/fruits_quality_model.pth"
+
+    # ✅ Ensure directory exists
+    model_dir = os.path.dirname(model_path)
+    if not os.path.exists(model_dir):
+        print(f"Creating directory: {model_dir}")
+        os.makedirs(model_dir, exist_ok=True)
+
+    # ✅ Lazy download if file is missing
+    if not os.path.exists(model_path):
+        print("Model file not found. Downloading...")
+        urllib.request.urlretrieve(MODEL_URL, model_path)
+        print("Download complete.")
+
+    # ===== EXISTING CODE (unchanged below) =====
+
+    print("Starting loading model...")
+    
+    model = resnet50(weights=None)
+    
+    print("Changing the final layer to a binary classification layer...")
+    
+    model.fc = torch.nn.Linear(model.fc.in_features, 2)
+    
+    print("Loading the model weights...")
+    
+    loaded_sd = torch.load(model_path, map_location=device)
+    
+    print("Loading the model weights into the model...")
+    
+    model.load_state_dict(loaded_sd, strict=False)
+    
+    print("\nModel loaded successfully!\n")
+    
+    return model
+
+def load_model_deprecated(model_path, device="cpu"):
     """
     Initializes a ResNet50 model structure, adapts the final layer for binary 
     classification, and loads the saved model weights from the specified path.
