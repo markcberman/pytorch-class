@@ -24,4 +24,7 @@ dependencies = [
     "seaborn>=0.13.2",
     "torchinfo>=1.8.0",
     "torchmetrics>=1.9.0",
+    "diffusers==0.29.2",
+    "transformers==4.45.0",
+    "accelerate>=1.13.0",
 ]

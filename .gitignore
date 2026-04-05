@@ -33,6 +33,9 @@ conda-meta/
 examples/module_5/graded/dataset/dataset-images.tar.gz
 
 # Saved model weights
+models/
 *.pth
 *.pt
+*.ckpt
+*.safetensors
 **/saved_models/
